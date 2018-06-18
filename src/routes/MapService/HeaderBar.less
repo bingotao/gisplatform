@@ -1,0 +1,41 @@
+@import '../../default.less';
+
+.headerbar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  height: 50px;
+  background: white;
+  width: 360px;
+  z-index: 999;
+  border-radius: 3px;
+  box-shadow: @box-shadow;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  color: @primary-color;
+  font-size: 20px;
+  letter-spacing: 1px;
+  overflow: hidden;
+  letter-spacing: 2px;
+  :global {
+    .iconfont {
+      font-size: 32px;
+    }
+
+    .icon-geographic-information {
+      margin-right: 5px;
+    }
+
+    .icon-shuju2 {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      padding: 0 10px;
+      cursor: pointer;
+      color: white;
+      background: @primary-color;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@import '../../default.less';
+.layercontrol {
+  @top: 65px;
+
+  position: absolute;
+  top: @top;
+  left: 10px;
+  width: 360px;
+  bottom: calc(~'100% - @{top}');
+
+  background: white;
+  border-radius: 3px;
+  box-shadow: 2px 0 5px 0 @border-color;
+  z-index: 999;
+  transition: @transition;
+  overflow: auto;
+  box-shadow: @box-shadow;
+
+  &:global(.active) {
+    bottom: 40px;
+  }
+}
