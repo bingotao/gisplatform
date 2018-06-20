@@ -26,8 +26,8 @@ L.tileLayer.tdtjs_veca = options =>
     options
   );
 
-L.tileLayer.tdtjs_img = () => L.layerGroup([L.tileLayer.tdtjs_imgo(), L.tileLayer.tdtjs_imga()]);
-L.tileLayer.tdtjs_vec = () => L.layerGroup([L.tileLayer.tdtjs_veco(), L.tileLayer.tdtjs_veca()]);
+L.tileLayer.tdtjs_img = (options) => L.layerGroup([L.tileLayer.tdtjs_imgo(options), L.tileLayer.tdtjs_imga(options)]);
+L.tileLayer.tdtjs_vec = (options) => L.layerGroup([L.tileLayer.tdtjs_veco(options), L.tileLayer.tdtjs_veca(options)]);
 
 // 天地图·国家
 L.tileLayer.tdtgj_imgo = options =>
@@ -54,8 +54,8 @@ L.tileLayer.tdtgj_veca = options =>
     subdomains: ['0', '1', '2', '3', '4', '5', '6', '7'],
   });
 
-L.tileLayer.tdtgj_img = () => L.layerGroup([L.tileLayer.tdtgj_imgo(), L.tileLayer.tdtgj_imga()]);
-L.tileLayer.tdtgj_vec = () => L.layerGroup([L.tileLayer.tdtgj_veco(), L.tileLayer.tdtgj_veca()]);
+L.tileLayer.tdtgj_img = (options) => L.layerGroup([L.tileLayer.tdtgj_imgo(options), L.tileLayer.tdtgj_imga(options)]);
+L.tileLayer.tdtgj_vec = (options) => L.layerGroup([L.tileLayer.tdtgj_veco(options), L.tileLayer.tdtgj_veca(options)]);
 
 L.CRS.EPSG4490 = L.extend({}, L.CRS.EPSG4326, {
   code: 'EPSG:4490',

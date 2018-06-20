@@ -1,93 +1,139 @@
 import React, { Component } from 'react';
-import { baseMaps, mapServices } from '../../common/mapServices.js';
+import { Icon, Input, Radio, Collapse, Checkbox, Popover, Slider, Tooltip } from 'antd';
+import { baseMaps, mapServices, xzq } from '../../common/mapServices.js';
 import st from './LayerControl.less';
-import { Icon, Input, Tree, Radio, Collapse } from 'antd';
 
-const Search = Input.Search,
-  TreeNode = Tree.TreeNode,
-  RadioGroup = Radio.Group,
-  Panel = Collapse.Panel;
-
-var t = mapServices;
+const { Search } = Input;
+const RadioGroup = Radio.Group;
+const { Panel } = Collapse;
 
 class LayerControl extends Component {
   state = {
-    checkedKeys: [],
-    showBaseMapGroup: true,
+    isSearch: false,
     mapServices: mapServices,
+    searchResult: [],
   };
 
-  checkedKeys = {};
+  changeBaseMap(item) {
+    for (const b of baseMaps.children) {
+      b.layer.remove();
+    }
+    item.layer.addTo(this.props.map);
+  }
+
+  getSettingPanel(i) {
+    switch (i.type) {
+      case 'esri/dynamic':
+        return (
+          <div>
+            <div className={st.settingitem}>
+              透明度
+              <Slider
+                style={{ width: '160px' }}
+                min={0}
+                max={1}
+                onChange={e => {
+                  i.layer.setOpacity(e);
+                }}
+                defaultValue={i.opacity}
+                step={0.01}
+              />
+            </div>
+          </div>
+        );
+      case 'heat':
+        return (
+          <div>
+            <div className={st.settingitem}>
+              半径&ensp;
+              <Slider
+                style={{ width: '160px' }}
+                min={1}
+                max={100}
+                onChange={e => {
+                  i.layer.setOptions({ radius: e });
+                }}
+                defaultValue={i.radius}
+                step={1}
+              />
+            </div>
+            <div className={st.settingitem}>
+              模糊&ensp;
+              <Slider
+                style={{ width: '160px' }}
+                min={1}
+                max={100}
+                onChange={e => {
+                  i.layer.setOptions({ blur: e });
+                }}
+                defaultValue={i.blur}
+                step={1}
+              />
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  }
 
   getBaseMaps() {
-    var defaultValue = null;
+    let defaultValue = null;
     const radioStyle = {
       display: 'block',
       height: '30px',
       lineHeight: '30px',
     };
-    var radios = baseMaps.children.map(e => {
+    const radios = baseMaps.children.map(e => {
       if (e.on) {
         defaultValue = e.id;
       }
       return (
-        <Radio style={radioStyle} value={e.id}>
+        <Radio item={e} style={radioStyle} value={e.id}>
           {e.name}
         </Radio>
       );
     });
     return (
-      <Collapse
-        className={this.state.showBaseMapGroup ? '' : 'hidden'}
-        defaultActiveKey={[baseMaps.id]}
-      >
+      <Collapse defaultActiveKey={[baseMaps.id]}>
         <Panel header={baseMaps.name} key={baseMaps.id}>
-          <RadioGroup defaultValue={defaultValue}>{radios}</RadioGroup>
+          <RadioGroup defaultValue={defaultValue} onChange={e => this.changeBaseMap(e.target.item)}>
+            {radios}
+          </RadioGroup>
         </Panel>
       </Collapse>
     );
   }
 
   getServices() {
-    var { mapServices, checkedKeys } = this.state;
+    var { mapServices } = this.state;
     var cmps = [];
 
-    var loop = svs => {
-      return svs.map(ss => {
-        if (ss.children && ss.children.length) {
-          return (
-            <TreeNode disableCheckbox key={ss.id} title={ss.name}>
-              {loop(ss.children)}
-            </TreeNode>
-          );
-        } else {
-          return <TreeNode item={ss} key={ss.id} title={ss.name} />;
-        }
-      });
-    };
-
     for (let m of mapServices) {
-      let id = m.id;
       cmps.push(
         <Collapse defaultActiveKey={[m.id]}>
           <Panel header={m.name} key={m.id}>
-            <Tree
-              checkedKeys={checkedKeys}
-              onCheck={checkedKeys => {
-                this.checkedKeys[id] = checkedKeys;
-                let cks = [];
+            {m.children.map(i => {
+              return (
+                <Checkbox
+                  checked={i.on}
+                  onChange={e => {
+                    i.on = e.target.checked;
+                    this.toggleLayer(i);
+                    this.setState({});
+                  }}
+                  key={i.id}
+                >
+                  {i.name}
 
-                for (let i in this.checkedKeys) {
-                  cks = cks.concat(this.checkedKeys[i]);
-                }
-
-                this.setState({ checkedKeys: cks });
-              }}
-              checkable
-              defaultExpandedKeys={[]}
-            >
-              {loop(m.children)}
-            </Tree>
+                  <Tooltip placement="right" title="设置">
+                    <Popover title="设置" content={this.getSettingPanel(i)} trigger="click">
+                      <Icon type="setting" />
+                    </Popover>
+                  </Tooltip>
+                </Checkbox>
+              );
+            })}
           </Panel>
         </Collapse>
       );
@@ -95,9 +141,47 @@ class LayerControl extends Component {
     return cmps;
   }
 
-  updateServices(keyword) {
-    var services = [];
-    var loop = (ss, services) => {
+  toggleLayer(i) {
+    console.log(i);
+    if (i.layer) {
+      if (i.on) i.layer.addTo(this.props.map);
+      else i.layer.remove();
+    }
+  }
+
+  getResults() {
+    const { searchResult } = this.state;
+    return (
+      <Collapse defaultActiveKey={['ssjg']}>
+        <Panel header="搜索结果" key="ssjg">
+          {searchResult.length ? (
+            searchResult.map(i => {
+              return (
+                <Checkbox
+                  checked={i.on}
+                  onChange={e => {
+                    i.on = e.target.checked;
+                    this.toggleLayer(i);
+                    this.setState({});
+                  }}
+                  key={i.id}
+                >
+                  {i.name}
+                </Checkbox>
+              );
+            })
+          ) : (
+            <div className={st.nullresult}>未找到相应服务</div>
+          )}
+        </Panel>
+      </Collapse>
+    );
+  }
+
+  getSearchResult(keyword) {
+    const { mapServices } = this.state;
+    let services = [];
+    const loop = (ss, services) => {
       for (let s of ss) {
         if (s.children && s.children.length) {
           loop(s.children, services);
@@ -111,18 +195,12 @@ class LayerControl extends Component {
       if (keyword) {
         loop(mapServices, services);
         this.setState({
-          showBaseMapGroup: false,
-          mapServices: [
-            {
-              id: 'ssjg',
-              name: '搜索结果',
-              children: services,
-            },
-          ],
+          isSearch: true,
+          searchResult: services,
         });
       }
     } else {
-      this.setState({ showBaseMapGroup: true, mapServices: mapServices });
+      this.setState({ isSearch: false });
     }
   }
 
@@ -130,8 +208,21 @@ class LayerControl extends Component {
     if (this.props.closeLayerControl) this.props.closeLayerControl();
   }
 
+  componentDidMount() {
+    this.baseMapPane = this.props.map.createPane('basemappane');
+    this.layerPanes = this.props.map.createPane('layerspane');
+
+    for (const b of baseMaps.children) {
+      if (b.on) {
+        this.changeBaseMap(b);
+      }
+    }
+    xzq.addTo(this.props.map);
+  }
+
   render() {
     const { show } = this.props;
+    const { isSearch } = this.state;
     return (
       <div className={`${st.layercontrol} ${show ? 'active' : ''}`}>
         <Icon
@@ -148,11 +239,14 @@ class LayerControl extends Component {
             <Search
               enterButton
               placeholder="请输入关键字..."
-              onSearch={value => this.updateServices(value)}
+              onSearch={value => this.getSearchResult(value)}
             />
             <div className={st.services}>
-              {this.getBaseMaps()}
-              {this.getServices()}
+              <div className={isSearch ? '' : 'active'}>
+                {this.getBaseMaps()}
+                {this.getServices()}
+              </div>
+              <div className={isSearch ? 'active' : ''}>{this.getResults()}</div>
             </div>
           </div>
         </div>
