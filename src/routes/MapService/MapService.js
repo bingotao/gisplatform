@@ -55,6 +55,10 @@ class MapService extends Component {
     this.setState({ showLayerControl: true });
   }
 
+  hideLayerControl() {
+    this.setState({ showLayerControl: false });
+  }
+
   pickerCoordinates() {
     if (!this.drawTools.marker) {
       var drawPoint = new L.Draw.Marker(this.map, { icon: icon1 });
@@ -320,7 +324,12 @@ class MapService extends Component {
           <Link to="/home">制图服务</Link>
           <Link to="/developer">应用开发</Link>
         </div>
-        <HeaderBar onLayerClick={e => this.toggleLayerControl()} ref={e => (this.headerBar = e)} />
+        <HeaderBar
+          onLayerClick={e => this.toggleLayerControl()}
+          ref={e => {
+            this.headerBar = e;
+          }}
+        />
         <Toolbar
           onMeasureLength={this.enableMeasureLength.bind(this)}
           onMeasureArea={this.enableMeasureArea.bind(this)}
@@ -330,7 +339,14 @@ class MapService extends Component {
           onClear={this.clearMap.bind(this)}
         />
         {mapReady ? (
-          <LayerControl show={showLayerControl} map={this.map} ref={e => (this.layerControl = e)} />
+          <LayerControl
+            closeLayerControl={e => this.hideLayerControl()}
+            show={showLayerControl}
+            map={this.map}
+            ref={e => {
+              this.layerControl = e;
+            }}
+          />
         ) : null}
 
         <div className={st.locationpanel + (showLocationPanel ? ' active' : '')}>

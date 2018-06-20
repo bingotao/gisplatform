@@ -1,13 +1,11 @@
 @import '../../default.less';
 .layercontrol {
   @top: 65px;
-
   position: absolute;
   top: @top;
   left: 10px;
   width: 360px;
   bottom: calc(~'100% - @{top}');
-
   background: white;
   border-radius: 3px;
   box-shadow: 2px 0 5px 0 @border-color;
@@ -15,8 +13,69 @@
   transition: @transition;
   overflow: auto;
   box-shadow: @box-shadow;
-
+  .closebtn {
+    position: absolute;
+    font-size: 24px;
+    right: 10px;
+    top: 10px;
+    transition: @transition;
+    cursor: pointer;
+    &:hover {
+      color: @primary-color;
+    }
+  }
+  .container {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px;
+    .header {
+      height: 45px;
+      font-size: 22px;
+      padding-bottom: 10px;
+      color: @primary-color;
+      border-bottom: 2px solid @primary-color;
+      margin-bottom: 10px;
+      > span {
+        font-size: 26px;
+        display: inline-block;
+        transform: translateY(2px);
+      }
+    }
+    .body {
+      height: calc(~'100% - 55px');
+      .services {
+        margin-top: 5px;
+        height: calc(~'100% - 35px');
+        overflow: auto;
+      }
+    }
+    .group {
+      display: block;
+    }
+  }
   &:global(.active) {
     bottom: 40px;
+  }
+  :global {
+    .ant-tree-checkbox.ant-tree-checkbox-disabled {
+      display: none;
+    }
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+      padding: 7px 0 7px 40px;
+    }
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header .arrow {
+      top: -3px;
+    }
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding: 8px 16px;
+    }
+    .ant-collapse {
+      margin-bottom: 8px;
+    }
+
+    .hidden.ant-collapse {
+      display: none;
+    }
   }
 }
