@@ -315,7 +315,9 @@ class MapService extends Component {
           ( 经度: {x} , 维度 : {y} )
         </div>
         <div className={st.navs}>
-          <span>©地理信息公共服务平台&emsp;@智慧新吴科技有限公司</span>
+          <span style={{ marginRight: 10 }}>
+            ©地理信息公共服务平台&emsp;{/* @智慧新吴科技有限公司 */}
+          </span>
           <Link to="/home">首&ensp;页</Link>
           <Link to="/data">数据服务</Link>
           <Link to="/home">分析服务</Link>

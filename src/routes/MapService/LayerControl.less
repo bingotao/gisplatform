@@ -93,9 +93,17 @@
             }
         }
         .ant-checkbox-wrapper {
-            .anticon-setting {
+            .anticon {
                 float: right;
                 margin-top: 3px;
+                transition: @transition;
+                &.show {
+                    display: block;
+                    color: @primary-color;
+                }
+            }
+            .anticon-setting {
+                display: none;
             }
         }
         /*必须有才能应用其他样式*/

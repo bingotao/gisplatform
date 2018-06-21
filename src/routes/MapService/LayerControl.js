@@ -128,9 +128,12 @@ class LayerControl extends Component {
 
                   <Tooltip placement="right" title="设置">
                     <Popover title="设置" content={this.getSettingPanel(i)} trigger="click">
-                      <Icon type="setting" />
+                      <Icon className={i.on ? 'show' : ''} type="setting" />
                     </Popover>
                   </Tooltip>
+                  <Popover placement="right" title={i.name} content="">
+                    <Icon type="bars" />
+                  </Popover>
                 </Checkbox>
               );
             })}
@@ -167,6 +170,15 @@ class LayerControl extends Component {
                   key={i.id}
                 >
                   {i.name}
+
+                  <Tooltip placement="right" title="设置">
+                    <Popover title="设置" content={this.getSettingPanel(i)} trigger="click">
+                      <Icon className={i.on ? 'show' : ''} type="setting" />
+                    </Popover>
+                  </Tooltip>
+                  <Popover placement="right" title={i.name} content="">
+                    <Icon type="bars" />
+                  </Popover>
                 </Checkbox>
               );
             })
