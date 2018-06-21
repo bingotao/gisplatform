@@ -23,5 +23,6 @@ export default {
     react: 'React',
     'react-dom': 'ReactDOM',
     leaflet: 'L',
+    echarts: 'echarts',
   },
 };

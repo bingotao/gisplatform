@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Icon, Input, Radio, Collapse, Checkbox, Popover, Slider, Tooltip } from 'antd';
 import { baseMaps, mapServices, xzq } from '../../common/mapServices.js';
 import st from './LayerControl.less';
+import LayerDesciption from './LayerDescription';
 
 const { Search } = Input;
 const RadioGroup = Radio.Group;
@@ -105,6 +106,10 @@ class LayerControl extends Component {
     );
   }
 
+  getLayerDescription(i) {
+    return <div className={st.layerdescription} />;
+  }
+
   getServices() {
     var { mapServices } = this.state;
     var cmps = [];
@@ -126,12 +131,12 @@ class LayerControl extends Component {
                 >
                   {i.name}
 
-                  <Tooltip placement="right" title="设置">
+                  <Tooltip placement="right" title="点击设置">
                     <Popover title="设置" content={this.getSettingPanel(i)} trigger="click">
                       <Icon className={i.on ? 'show' : ''} type="setting" />
                     </Popover>
                   </Tooltip>
-                  <Popover placement="right" title={i.name} content="">
+                  <Popover placement="right" title={i.name} content={<LayerDesciption item={i} />}>
                     <Icon type="bars" />
                   </Popover>
                 </Checkbox>
@@ -145,7 +150,6 @@ class LayerControl extends Component {
   }
 
   toggleLayer(i) {
-    console.log(i);
     if (i.layer) {
       if (i.on) i.layer.addTo(this.props.map);
       else i.layer.remove();
@@ -171,12 +175,12 @@ class LayerControl extends Component {
                 >
                   {i.name}
 
-                  <Tooltip placement="right" title="设置">
+                  <Tooltip placement="right" title="点击设置">
                     <Popover title="设置" content={this.getSettingPanel(i)} trigger="click">
                       <Icon className={i.on ? 'show' : ''} type="setting" />
                     </Popover>
                   </Tooltip>
-                  <Popover placement="right" title={i.name} content="">
+                  <Popover placement="right" title={i.name} content={<LayerDesciption item={i} />}>
                     <Icon type="bars" />
                   </Popover>
                 </Checkbox>

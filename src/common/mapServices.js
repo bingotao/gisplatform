@@ -1,8 +1,10 @@
 import L from './leaflet.extends.js';
+import echarts from 'echarts';
+import demoData from './demoGeoJSON.js';
 
 const xzq = L.esri.dynamicMapLayer({
   url: 'http://221.228.242.3:6080/arcgis/rest/services/gisplatform_demo/XZQ/MapServer',
-  //pane: 'layerspane',
+  pane: 'layerspane',
 });
 
 const baseMaps = {
@@ -50,6 +52,62 @@ const initLayers = i => {
         ...i,
       });
       break;
+    case 'statistic':
+      var groupBase = L.layerGroup();
+      var geojson = L.geoJSON(demoData, {
+        ...i,
+        style: function(feature) {
+          return { color: feature.properties.color, fillOpacity: 0.8, weight: 0 };
+        },
+      });
+      geojson.on('add', function() {
+        for (let t in geojson._layers) {
+          let layer = geojson._layers[t];
+          let pnt = layer.getCenter();
+          let { gsqy, ybqy } = layer.feature.properties;
+          let id = i.id + t;
+          L.marker(pnt, {
+            icon: L.divIcon({
+              iconSize: [100, 100],
+              className: 'map-pie-chart',
+              html: `<div id=${id}></div>`,
+            }),
+          })
+            .on('add', function() {
+              var dom = document.getElementById(id);
+
+              var option = {
+                title: {
+                  text: '',
+                },
+                series: [
+                  {
+                    name: '',
+                    type: 'pie',
+                    label: {
+                      show: false,
+                    },
+                    labelLine: {
+                      show: false,
+                    },
+
+                    data: [
+                      { name: '规上企业', value: gsqy, itemStyle: { color: 'rgb(103,224,227)' } },
+                      { name: '一般企业', value: ybqy, itemStyle: { color: 'rgb(255,240,101)' } },
+                    ],
+                  },
+                ],
+                tooltip: {
+                  trigger: 'item',
+                  formatter: '{b}：{c}',
+                },
+              };
+              echarts.init(dom).setOption(option);
+            })
+            .addTo(groupBase);
+        }
+      });
+      i.layer = L.layerGroup([geojson, groupBase]);
     default:
       break;
   }
@@ -69,6 +127,9 @@ const mapServices = [
         identifyLayers: [0],
         opacity: 0.5,
         legendLayer: 0,
+        description: '新吴区乡镇街道动态地图服务。',
+        typeAlias: 'ArcGIS动态地图服务',
+        date: '2018年3月22日',
       },
     ],
   },
@@ -85,6 +146,9 @@ const mapServices = [
         identifyLayers: [0],
         opacity: 1,
         legendLayer: 0,
+        description: '工业用地分布情况，按照工业用地是否承载规上企业制图。',
+        typeAlias: 'ArcGIS动态地图服务',
+        date: '2018年3月22日',
       },
       {
         id: 'gyydzt002',
@@ -95,6 +159,9 @@ const mapServices = [
         identifyLayers: [0],
         opacity: 1,
         legendLayer: 0,
+        description: '规模以上工业企业用地分布情况。',
+        typeAlias: 'ArcGIS动态地图服务',
+        date: '2018年3月22日',
       },
       {
         id: 'gyydzt003',
@@ -105,6 +172,9 @@ const mapServices = [
         identifyLayers: [0],
         opacity: 1,
         legendLayer: 0,
+        description: '重点项目用地分布情况。',
+        date: '2018年3月22日',
+        typeAlias: 'ArcGIS动态地图服务',
       },
     ],
   },
@@ -119,6 +189,9 @@ const mapServices = [
         url:
           'http://221.228.242.3:6080/arcgis/rest/services/gisplatform_demo/GYYD_Point/MapServer/0',
         pane: 'layerspane',
+        description: '采用聚合图的形式展示工业企业的聚集程度。',
+        typeAlias: '聚合图地图服务',
+        date: '2018年3月22日',
       },
       {
         id: 'gyqyfxztt002',
@@ -129,10 +202,20 @@ const mapServices = [
         radius: 50,
         blur: 50,
         pane: 'layerspane',
+        description: '采用热力图的形式展示工业企业的聚集程度。',
+        typeAlias: '热力图地图服务',
+        date: '2018年3月22日',
       },
       {
         id: 'gyqyfxztt003',
         name: '工业企业统计图',
+        type: 'statistic',
+        description: '采用统计图的形式展示工业企业的聚集程度。',
+        typeAlias: '统计地图服务',
+        date: '2018年3月22日',
+        data: demoData,
+        labelField: 'XZQMC',
+        valueField: 'total',
       },
     ],
   },
