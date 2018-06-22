@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
-import { Icon, Input, Radio, Collapse, Checkbox, Popover, Slider, Tooltip } from 'antd';
+import {
+  Icon,
+  Input,
+  Radio,
+  Collapse,
+  Checkbox,
+  Popover,
+  Slider,
+  Tooltip,
+  notification,
+} from 'antd';
 import { baseMaps, mapServices, xzq } from '../../common/mapServices.js';
 import st from './LayerControl.less';
 import LayerDesciption from './LayerDescription';
+import IdentifyPopup from './IdentifyPopup';
 
 const { Search } = Input;
 const RadioGroup = Radio.Group;
@@ -14,6 +25,8 @@ class LayerControl extends Component {
     mapServices: mapServices,
     searchResult: [],
   };
+
+  identifyLayers = [];
 
   changeBaseMap(item) {
     for (const b of baseMaps.children) {
@@ -96,7 +109,7 @@ class LayerControl extends Component {
       );
     });
     return (
-      <Collapse defaultActiveKey={[baseMaps.id]}>
+      <Collapse>
         <Panel header={baseMaps.name} key={baseMaps.id}>
           <RadioGroup defaultValue={defaultValue} onChange={e => this.changeBaseMap(e.target.item)}>
             {radios}
@@ -108,6 +121,18 @@ class LayerControl extends Component {
 
   getLayerDescription(i) {
     return <div className={st.layerdescription} />;
+  }
+
+  refreshIdentifyLayers() {
+    var { mapServices } = this.state;
+    this.identifyLayers = [];
+    mapServices.map(i => {
+      i.children.map(j => {
+        if (j.on && j.identifyLayers && j.identifyLayers.length) {
+          this.identifyLayers.push(j);
+        }
+      });
+    });
   }
 
   getServices() {
@@ -125,20 +150,20 @@ class LayerControl extends Component {
                   onChange={e => {
                     i.on = e.target.checked;
                     this.toggleLayer(i);
+                    this.refreshIdentifyLayers();
                     this.setState({});
                   }}
                   key={i.id}
                 >
                   {i.name}
-
+                  <Popover placement="right" title={i.name} content={<LayerDesciption item={i} />}>
+                    <Icon type="bars" />
+                  </Popover>
                   <Tooltip placement="right" title="点击设置">
                     <Popover title="设置" content={this.getSettingPanel(i)} trigger="click">
                       <Icon className={i.on ? 'show' : ''} type="setting" />
                     </Popover>
                   </Tooltip>
-                  <Popover placement="right" title={i.name} content={<LayerDesciption item={i} />}>
-                    <Icon type="bars" />
-                  </Popover>
                 </Checkbox>
               );
             })}
@@ -174,15 +199,14 @@ class LayerControl extends Component {
                   key={i.id}
                 >
                   {i.name}
-
+                  <Popover placement="right" title={i.name} content={<LayerDesciption item={i} />}>
+                    <Icon type="bars" />
+                  </Popover>
                   <Tooltip placement="right" title="点击设置">
                     <Popover title="设置" content={this.getSettingPanel(i)} trigger="click">
                       <Icon className={i.on ? 'show' : ''} type="setting" />
                     </Popover>
                   </Tooltip>
-                  <Popover placement="right" title={i.name} content={<LayerDesciption item={i} />}>
-                    <Icon type="bars" />
-                  </Popover>
                 </Checkbox>
               );
             })
@@ -227,13 +251,61 @@ class LayerControl extends Component {
   componentDidMount() {
     this.baseMapPane = this.props.map.createPane('basemappane');
     this.layerPanes = this.props.map.createPane('layerspane');
-
+    const { map } = this.props;
+    // 加载底图
     for (const b of baseMaps.children) {
       if (b.on) {
         this.changeBaseMap(b);
       }
     }
-    xzq.addTo(this.props.map);
+    xzq.addTo(map);
+
+    // 要素查询
+    map.on('click', e => {
+      let pnt = e.latlng,
+        iLayers = this.identifyLayers;
+      let l = iLayers.length;
+      if (l) {
+        var returnCnt = 0;
+        var results = [];
+        var ftCnt = 0,
+          identifyCnt = 0;
+        for (var i = 0; i < l; i++) {
+          var layer = iLayers[i],
+            identifyLayers = layer.identifyLayers;
+          let name = layer.name;
+          // 如果设定了识别级别
+          if (!layer.identifyLevel || (layer.identifyLevel && zoom >= layer.identifyLevel)) {
+            identifyCnt++;
+            var layerstr =
+              identifyLayers.indexOf('*') == 0 ? 'all' : 'all:' + identifyLayers.join(',');
+            layer.layer
+              .identify()
+              .on(map)
+              .layers(layerstr)
+              .at(pnt)
+              .run(function(er, ftCol, eFtCol) {
+                returnCnt++;
+                if (!er && ftCol.features.length) {
+                  ftCnt += ftCol.features.length;
+                  results.push({
+                    name: name,
+                    ftCol: ftCol,
+                    eFtCol: eFtCol,
+                  });
+                }
+                if (returnCnt == identifyCnt) {
+                  if (ftCnt) {
+                    IdentifyPopup.init(map, results);
+                  } else {
+                    notification.warn({ message: '提示', description: '未找到任何要素' });
+                  }
+                }
+              });
+          }
+        }
+      }
+    });
   }
 
   render() {

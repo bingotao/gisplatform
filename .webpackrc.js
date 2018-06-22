@@ -24,5 +24,6 @@ export default {
     'react-dom': 'ReactDOM',
     leaflet: 'L',
     echarts: 'echarts',
+    jquery: '$',
   },
 };

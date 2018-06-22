@@ -7,9 +7,11 @@ import st from './MapService.less';
 import HeaderBar from './HeaderBar.js';
 import LayerControl from './LayerControl.js';
 import Toolbar from './Toolbar.js';
+import IdentifyPopup from './IdentifyPopup.js';
 
 let x = 120.41513442993164,
-  y = 31.506900787353516;
+  y = 31.506900787353516,
+  zoom = 12;
 
 let icon0 = L.divIcon({
     className: 'div-icon0',
@@ -271,6 +273,11 @@ class MapService extends Component {
     this.clearCoordinatesMarker();
     this.clearMeasureAreaLayer();
     this.clearMeasureLengthLayer();
+    IdentifyPopup.clearIdentifyResult();
+  }
+
+  fullMap() {
+    this.map.setView([y, x], zoom);
   }
 
   componentDidMount() {
@@ -287,7 +294,7 @@ class MapService extends Component {
       attributionControl: false,
       crs: L.CRS.EPSG4490,
       center: [y, x],
-      zoom: 12,
+      zoom: zoom,
     });
 
     map.on('mousemove', e =>
@@ -337,6 +344,7 @@ class MapService extends Component {
           onGetLocation={this.showLocationPanel.bind(this)}
           onLayers={this.showLayerControl.bind(this)}
           onClear={this.clearMap.bind(this)}
+          onFullMap={this.fullMap.bind(this)}
         />
         {mapReady ? (
           <LayerControl

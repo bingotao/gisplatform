@@ -90,7 +90,6 @@ const initLayers = i => {
                     labelLine: {
                       show: false,
                     },
-
                     data: [
                       { name: '规上企业', value: gsqy, itemStyle: { color: 'rgb(103,224,227)' } },
                       { name: '一般企业', value: ybqy, itemStyle: { color: 'rgb(255,240,101)' } },
@@ -107,7 +106,7 @@ const initLayers = i => {
             .addTo(groupBase);
         }
       });
-      i.layer = L.layerGroup([geojson, groupBase]);
+      i.layer = L.layerGroup([geojson, groupBase], { pane: i.pane });
     default:
       break;
   }
@@ -125,7 +124,7 @@ const mapServices = [
         url: 'http://221.228.242.3:6080/arcgis/rest/services/gisplatform_demo/XZZ/MapServer',
         pane: 'layerspane',
         identifyLayers: [0],
-        opacity: 0.5,
+        opacity: 1,
         legendLayer: 0,
         description: '新吴区乡镇街道动态地图服务。',
         typeAlias: 'ArcGIS动态地图服务',
@@ -216,6 +215,7 @@ const mapServices = [
         data: demoData,
         labelField: 'XZQMC',
         valueField: 'total',
+        pane: 'layerspane',
       },
     ],
   },

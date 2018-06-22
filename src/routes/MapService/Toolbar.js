@@ -9,6 +9,7 @@ class Toolbar extends Component {
     onGetLocation: () => {},
     onLayers: () => {},
     onClear: () => {},
+    onFullMap:()=>{}
   };
 
   render() {
@@ -22,6 +23,9 @@ class Toolbar extends Component {
         </span>
         <span className="iconfont icon-qingchu" onClick={this.props.onClear}>
           清除
+        </span>
+        <span className="iconfont icon-fitView" onClick={this.props.onFullMap}>
+          全图
         </span>
         <span className="iconfont icon-zuobiao" onClick={this.props.onPickCoordinates}>
           坐标拾取
