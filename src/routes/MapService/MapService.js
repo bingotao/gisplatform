@@ -8,6 +8,7 @@ import HeaderBar from './HeaderBar.js';
 import LayerControl from './LayerControl.js';
 import Toolbar from './Toolbar.js';
 import IdentifyPopup from './IdentifyPopup.js';
+import ApplyServices from './ApplyServices.js';
 
 let x = 120.41513442993164,
   y = 31.506900787353516,
@@ -46,6 +47,7 @@ class MapService extends Component {
     x: x,
     y: y,
     showLocationPanel: false,
+    mapServices: [],
   };
 
   toggleLayerControl() {
@@ -280,6 +282,10 @@ class MapService extends Component {
     this.map.setView([y, x], zoom);
   }
 
+  refreshApplyServices(ss) {
+    this.setState({ mapServices: ss });
+  }
+
   componentDidMount() {
     var map = this.initMap();
     this.map = map;
@@ -309,7 +315,7 @@ class MapService extends Component {
   }
 
   render() {
-    var { mapReady, showLayerControl, x, y, showLocationPanel } = this.state;
+    var { mapReady, showLayerControl, x, y, showLocationPanel, mapServices } = this.state;
     return (
       <div className={st.mapservice}>
         <div
@@ -337,6 +343,17 @@ class MapService extends Component {
             this.headerBar = e;
           }}
         />
+        <ApplyServices
+          mapServices={mapServices}
+          applyServices={e => {
+            notification.success({
+              description: '服务申请提交成功，请等待管理员审核！',
+              message: '成功',
+            });
+
+            this.layerControl.disapplyAll();
+          }}
+        />
         <Toolbar
           onMeasureLength={this.enableMeasureLength.bind(this)}
           onMeasureArea={this.enableMeasureArea.bind(this)}
@@ -349,6 +366,7 @@ class MapService extends Component {
         {mapReady ? (
           <LayerControl
             closeLayerControl={e => this.hideLayerControl()}
+            applyServicesChange={e => this.refreshApplyServices(e)}
             show={showLayerControl}
             map={this.map}
             ref={e => {

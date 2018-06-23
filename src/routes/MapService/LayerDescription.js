@@ -78,6 +78,7 @@ class LayerDesciption extends Component {
           <span>服务类型：{i.typeAlias}</span>
           <span>发布时间：{i.date}</span>
           <span>是否可查询：{i.identifyLayers ? '可查询' : '不可查询'}</span>
+          <span>是否可申请：{i.applyable ? '可申请' : '不可申请'}</span>
         </div>
         {this.getLegend()}
       </div>

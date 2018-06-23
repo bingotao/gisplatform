@@ -9,6 +9,7 @@ import {
   Slider,
   Tooltip,
   notification,
+  Button,
 } from 'antd';
 import { baseMaps, mapServices, xzq } from '../../common/mapServices.js';
 import st from './LayerControl.less';
@@ -27,6 +28,7 @@ class LayerControl extends Component {
   };
 
   identifyLayers = [];
+  applyServices = [];
 
   changeBaseMap(item) {
     for (const b of baseMaps.children) {
@@ -143,30 +145,7 @@ class LayerControl extends Component {
       cmps.push(
         <Collapse defaultActiveKey={[m.id]}>
           <Panel header={m.name} key={m.id}>
-            {m.children.map(i => {
-              return (
-                <Checkbox
-                  checked={i.on}
-                  onChange={e => {
-                    i.on = e.target.checked;
-                    this.toggleLayer(i);
-                    this.refreshIdentifyLayers();
-                    this.setState({});
-                  }}
-                  key={i.id}
-                >
-                  {i.name}
-                  <Popover placement="right" title={i.name} content={<LayerDesciption item={i} />}>
-                    <Icon type="bars" />
-                  </Popover>
-                  <Tooltip placement="right" title="点击设置">
-                    <Popover title="设置" content={this.getSettingPanel(i)} trigger="click">
-                      <Icon className={i.on ? 'show' : ''} type="setting" />
-                    </Popover>
-                  </Tooltip>
-                </Checkbox>
-              );
-            })}
+            {this.getLayerCheckbox(m.children)}
           </Panel>
         </Collapse>
       );
@@ -181,35 +160,103 @@ class LayerControl extends Component {
     }
   }
 
+  getLayerCheckbox(layers) {
+    return layers.map(i => {
+      return (
+        <Checkbox
+          checked={i.on}
+          onChange={e => {
+            i.on = e.target.checked;
+            this.toggleLayer(i);
+            this.refreshIdentifyLayers();
+            this.setState({});
+          }}
+          key={i.id}
+        >
+          {i.name}
+          <Popover
+            placement="right"
+            title={
+              <div>
+                {i.name}
+                {i.applyable ? (
+                  <span>
+                    <Button
+                      className={st.applybtn}
+                      size="small"
+                      onClick={e => this.disapplyMapService(i)}
+                      type="primary"
+                    >
+                      - 申请
+                    </Button>
+                    <Button
+                      className={st.applybtn}
+                      size="small"
+                      onClick={e => this.applyMapService(i)}
+                      type="primary"
+                    >
+                      + 申请
+                    </Button>
+                  </span>
+                ) : null}
+              </div>
+            }
+            content={<LayerDesciption item={i} />}
+          >
+            <Icon type="bars" />
+          </Popover>
+          <Tooltip placement="right" title="点击设置">
+            <Popover title="设置" content={this.getSettingPanel(i)} trigger="click">
+              <Icon className={i.on ? 'show' : ''} type="setting" />
+            </Popover>
+          </Tooltip>
+        </Checkbox>
+      );
+    });
+  }
+
+  applyMapService(layer) {
+    layer.apply = true;
+    this.refreshApplyServices();
+  }
+
+  disapplyAll() {
+    var { mapServices } = this.state;
+    mapServices.map(i => {
+      i.children.map(j => {
+        if (j.applyable) {
+          j.apply = false;
+        }
+      });
+    });
+    this.refreshApplyServices();
+  }
+
+  disapplyMapService(layer) {
+    layer.apply = false;
+    this.refreshApplyServices();
+  }
+
+  refreshApplyServices() {
+    var { mapServices } = this.state;
+    this.applyServices = [];
+    mapServices.map(i => {
+      i.children.map(j => {
+        if (j.applyable && j.apply) {
+          this.applyServices.push(j);
+        }
+      });
+    });
+    if (this.props.applyServicesChange) this.props.applyServicesChange(this.applyServices);
+  }
+
   getResults() {
     const { searchResult } = this.state;
     return (
       <Collapse defaultActiveKey={['ssjg']}>
         <Panel header="搜索结果" key="ssjg">
           {searchResult.length ? (
-            searchResult.map(i => {
-              return (
-                <Checkbox
-                  checked={i.on}
-                  onChange={e => {
-                    i.on = e.target.checked;
-                    this.toggleLayer(i);
-                    this.setState({});
-                  }}
-                  key={i.id}
-                >
-                  {i.name}
-                  <Popover placement="right" title={i.name} content={<LayerDesciption item={i} />}>
-                    <Icon type="bars" />
-                  </Popover>
-                  <Tooltip placement="right" title="点击设置">
-                    <Popover title="设置" content={this.getSettingPanel(i)} trigger="click">
-                      <Icon className={i.on ? 'show' : ''} type="setting" />
-                    </Popover>
-                  </Tooltip>
-                </Checkbox>
-              );
-            })
+            this.getLayerCheckbox(searchResult)
           ) : (
             <div className={st.nullresult}>未找到相应服务</div>
           )}

@@ -129,6 +129,7 @@ const mapServices = [
         description: '新吴区乡镇街道动态地图服务。',
         typeAlias: 'ArcGIS动态地图服务',
         date: '2018年3月22日',
+        applyable:true,
       },
     ],
   },
@@ -148,6 +149,7 @@ const mapServices = [
         description: '工业用地分布情况，按照工业用地是否承载规上企业制图。',
         typeAlias: 'ArcGIS动态地图服务',
         date: '2018年3月22日',
+        applyable:true,
       },
       {
         id: 'gyydzt002',
@@ -161,6 +163,7 @@ const mapServices = [
         description: '规模以上工业企业用地分布情况。',
         typeAlias: 'ArcGIS动态地图服务',
         date: '2018年3月22日',
+        applyable:true,
       },
       {
         id: 'gyydzt003',
@@ -174,6 +177,7 @@ const mapServices = [
         description: '重点项目用地分布情况。',
         date: '2018年3月22日',
         typeAlias: 'ArcGIS动态地图服务',
+        applyable:true,
       },
     ],
   },

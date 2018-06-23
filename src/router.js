@@ -19,6 +19,7 @@ function RouterConfig({ history, app }) {
   // const BasicLayout = routerData['/'].component;
   const Home = routerData['/home'].component;
   const MapService = routerData['/mapservice'].component;
+  const DataService = routerData['/dataservice'].component;
 
   return (
     <LocaleProvider locale={zhCN}>
@@ -26,6 +27,8 @@ function RouterConfig({ history, app }) {
         <Switch>
           <Route path="/home" component={Home} />
           <Route path="/mapservice" component={MapService} />
+          <Route path="/dataservice" component={DataService} />
+          <Route component={Home} />
           {/* <Route path="/user" component={UserLayout} />
           <AuthorizedRoute
             path="/"
