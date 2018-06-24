@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import $ from 'jquery';
-import { Button, Input, Radio, notification,message } from 'antd';
+import { Button, Input, Radio, notification, message } from 'antd';
 import st from './ServicePanel.less';
 
 const TextArea = Input.TextArea;
@@ -28,15 +28,36 @@ class ServicePanel extends Component {
         }
       }
       newParams.where = where.length ? where.join(' and ') : '1=1';
-      message.loading("服务请求中，请稍后...");
-      $.post(
-        url,
-        newParams,
-        e => {
+      message.loading('服务请求中，请稍后...');
+      //   $.post(
+      //     url,
+      //     newParams,
+      //     e => {
+      //       this.setState({ results: e });
+      //     },
+      //     'text'
+      //   )
+      //   .error(e => {
+      //     notification.error({
+      //       description: '请求超时',
+      //       message: '错误',
+      //     });
+      //   });
+
+      $.ajax(url, {
+        data: newParams,
+        dataType: 'text',
+        method: 'POST',
+        success: e => {
           this.setState({ results: e });
         },
-        'text'
-      );
+        error: e => {
+          notification.error({
+            description: '请求超时',
+            message: '错误',
+          });
+        },
+      });
     } else {
       notification.error({
         description: '请先在资源目录中选择服务',
@@ -54,7 +75,7 @@ class ServicePanel extends Component {
           switch (p.type) {
             case 'text':
               cmps.push(
-                <div className={st.paramsitem}>
+                <div key={p.id} className={st.paramsitem}>
                   <div>{p.name}：</div>
                   <Input defaultValue={p.defaultValue} onChange={e => (p.value = e.target.value)} />
                 </div>
@@ -62,7 +83,7 @@ class ServicePanel extends Component {
               break;
             case 'radio':
               cmps.push(
-                <div className={st.paramsitem}>
+                <div key={p.id} className={st.paramsitem}>
                   <div>{p.name}：</div>
                   <RadioGroup
                     defaultValue={p.defaultValue}

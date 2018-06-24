@@ -19,17 +19,17 @@ let navs = [
   {
     id: 'analysize',
     name: '分析服务',
-    to: '/',
+    to: '/analysize',
   },
   {
     id: 'mapping',
     name: '制图服务',
-    to: '/',
+    to: '/mapping',
   },
   {
     id: 'developping',
     name: '应用开发',
-    to: '/',
+    to: '/developping',
   },
 ];
 

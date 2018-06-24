@@ -1,31 +1,33 @@
 import { Component } from 'react';
-import request from '../../utils/request';
+import $ from 'jquery';
 import st from './LayerDescription.less';
-
-async function getLegendData(url) {
-  return request(url);
-}
 
 class LayerDesciption extends Component {
   state = {
     legendData: null,
   };
 
-  async getLegendData() {
+  getLegendData() {
     const { item } = this.props;
     if (item.legendLayer !== undefined) {
       const legendUrl = `${item.url}/legend?f=pjson`;
-      var legendData = await getLegendData(legendUrl);
-      legendData = legendData.layers[item.legendLayer];
-      if (legendData) {
-        legendData = legendData.legend.map(i => {
-          return {
-            name: i.label,
-            base64: `data:${i.contentType};base64,${i.imageData}`,
-          };
-        });
-        this.setState({ legendData: legendData });
-      }
+      $.post(
+        legendUrl,
+        legendData => {
+          if (legendData && legendData.layers && legendData.layers.length) {
+            legendData = legendData.layers[item.legendLayer];
+
+            legendData = legendData.legend.map(i => {
+              return {
+                name: i.label,
+                base64: `data:${i.contentType};base64,${i.imageData}`,
+              };
+            });
+            this.setState({ legendData: legendData });
+          }
+        },
+        'json'
+      );
     }
 
     if (item.type === 'statistic') {

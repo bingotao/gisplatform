@@ -16,7 +16,6 @@
       color: @primary-color;
       font-size: 24px;
       letter-spacing: 2px;
-
       :global(.iconfont) {
         font-size: 26px;
         display: inline-block;
@@ -96,6 +95,12 @@
         border-top: @border;
         border-bottom: @border;
         border-radius: 3px;
+
+        :global {
+          .anticon-pushpin-o {
+            margin-right: 5px;
+          }
+        }
       }
     }
 

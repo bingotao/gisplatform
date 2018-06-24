@@ -18,10 +18,28 @@ class DataService extends Component {
       <Tree onSelect={(i, j) => this.updateServicePanel(j.node.props.data)}>
         {dataServices.map(i => {
           return (
-            <TreeNode selectable={false} title={`${i.name}(${i.children.length})`}>
+            <TreeNode
+              selectable={false}
+              title={
+                <span>
+                  {`${i.name}(${i.children.length})`}
+                </span>
+              }
+            >
               {i.children
                 ? i.children.map(j => {
-                    return <TreeNode selectable={true} data={j} title={j.name} />;
+                    return (
+                      <TreeNode
+                        selectable={true}
+                        data={j}
+                        title={
+                          <span>
+                            <Icon type="pushpin-o" />
+                            {j.name}
+                          </span>
+                        }
+                      />
+                    );
                   })
                 : null}
             </TreeNode>

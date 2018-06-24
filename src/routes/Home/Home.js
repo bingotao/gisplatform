@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { Input, Carousel, Button, Icon } from 'antd';
+import { Input, Carousel, Button, Icon, Card, Col, Row, Layout } from 'antd';
 import navs from '../../common/navs.js';
 import st from './Home.less';
+import { Link } from 'dva/router';
+const { Footer } = Layout;
 
 class Home extends Component {
   componentDidMount() {
-    setInterval(e => {
-      if (!this.in && this.carousel) this.carousel.next();
-    }, 7000);
-
     this.slides.onmouseenter = e => {
       this.in = true;
     };
@@ -46,12 +44,17 @@ class Home extends Component {
             ref={e => {
               this.carousel = e;
             }}
-            effect="fade"
+            speed={1000}
+            autoplay={true}
+            autoplaySpeed={5000}
+            easing="ease-out"
           >
             <div key="0">
               <div className={st.d}>
                 <Button type="primary" size="large">
-                  在线地图服务<Icon type="arrow-right" />
+                  <Link to="/mapservice">
+                    在线地图服务<Icon type="arrow-right" />
+                  </Link>
                 </Button>
                 <div className={st.content}>汇集部门数据，提供OGC服务、ArcGIS服务</div>
                 <div className={[st.d0, st.dd].join(' ')}>
@@ -62,7 +65,9 @@ class Home extends Component {
             <div key="1">
               <div className={st.d}>
                 <Button type="primary" size="large">
-                  在线数据服务<Icon type="arrow-right" />
+                  <Link to="/dataservice">
+                    在线数据服务<Icon type="arrow-right" />
+                  </Link>
                 </Button>
                 <div className={st.content}>在线数据服务接口，提供标准GeoJSON数据</div>
                 <div className={[st.d1, st.dd].join(' ')}>
@@ -73,7 +78,9 @@ class Home extends Component {
             <div key="2">
               <div className={st.d}>
                 <Button type="primary" size="large">
-                  地理分析服务<Icon type="arrow-right" />
+                  <Link to="/analysize">
+                    地理分析服务<Icon type="arrow-right" />
+                  </Link>
                 </Button>
                 <div className={st.content}>在线地理分析，洞悉数据地理空间特征</div>
                 <div className={[st.d2, st.dd].join(' ')}>
@@ -84,7 +91,9 @@ class Home extends Component {
             <div key="3">
               <div className={st.d}>
                 <Button type="primary" size="large">
-                  在线制图服务<Icon type="arrow-right" />
+                  <Link to="/mapping">
+                    在线制图服务<Icon type="arrow-right" />
+                  </Link>
                 </Button>
                 <div className={st.content}>轻松定制属于您自己的专题地图</div>
                 <div className={[st.d3, st.dd].join(' ')}>
@@ -95,7 +104,9 @@ class Home extends Component {
             <div key="4">
               <div className={st.d}>
                 <Button type="primary" size="large">
-                  应用开发服务<Icon type="arrow-right" />
+                  <Link to="/developping">
+                    应用开发服务<Icon type="arrow-right" />
+                  </Link>
                 </Button>
                 <div className={st.content}>为开发人员提供地图深度定制的SDK</div>
                 <div className={[st.d4, st.dd].join(' ')}>
@@ -105,6 +116,75 @@ class Home extends Component {
             </div>
           </Carousel>
         </div>
+
+        <div className={st.tsgn}>
+          <div className={st.title}>特色功能</div>
+          <div className={st.content}>
+            <Row gutter={16}>
+              <Col span={6} className={st.col}>
+                <Card
+                  className={st.card}
+                  title={
+                    <Link to="/mapservice" key="mapservice">
+                      在线地图
+                    </Link>
+                  }
+                >
+                  <svg className={st.iconfont + ' icon'} aria-hidden="true">
+                    <use xlinkHref="#icon-maps" />
+                  </svg>
+                  <div> 汇集部门数据，提供OGC服务、ArcGIS服务</div>
+                </Card>
+              </Col>
+              <Col span={6} className={st.col}>
+                <Card
+                  className={st.card}
+                  title={
+                    <Link to="/dataservice" key="dataservice">
+                      数据接口
+                    </Link>
+                  }
+                >
+                  <svg className={st.iconfont + ' icon'} aria-hidden="true">
+                    <use xlinkHref="#icon-shujufuwu" />
+                  </svg>
+                  <div>在线数据服务接口，提供标准GeoJSON数据</div>
+                </Card>
+              </Col>
+              <Col span={6} className={st.col}>
+                <Card
+                  className={st.card}
+                  title={
+                    <Link to="/analysize" key="analysize">
+                      地理分析
+                    </Link>
+                  }
+                >
+                  <svg className={st.iconfont + ' icon'} aria-hidden="true">
+                    <use xlinkHref="#icon-fenxifuwu" />
+                  </svg>
+                  <div>在线地理分析，洞悉数据地理空间特征</div>
+                </Card>
+              </Col>
+              <Col span={6} className={st.col}>
+                <Card
+                  className={st.card}
+                  title={
+                    <Link to="/mapping" key="mapping">
+                      在线制图
+                    </Link>
+                  }
+                >
+                  <svg className={st.iconfont + ' icon'} aria-hidden="true">
+                    <use xlinkHref="#icon-inspur-shouhuiban" />
+                  </svg>
+                  <div>轻松定制属于您自己的专题地图</div>
+                </Card>
+              </Col>
+            </Row>
+          </div>
+        </div>
+
         <div className={st.item}>
           <div>
             <div className={[st.pic, st.pic0].join(' ')} />
@@ -133,6 +213,10 @@ class Home extends Component {
               <div>支持按区域、类别对空间数据进行统计分析，辅助政务决策</div>
             </div>
           </div>
+        </div>
+        <div className={st.footer}>
+          <div>无锡市新吴区区政府主办 智慧新吴科技有限公司承办</div>
+          <div>CopyRight © All Right Reserved. 盗版必究</div>
         </div>
       </div>
     );
