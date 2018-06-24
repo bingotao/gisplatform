@@ -4,4 +4,104 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+
+  > .header {
+    position: relative;
+    // width: 800px;
+    padding: 0 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    .logo {
+      color: @primary-color;
+      font-size: 24px;
+      letter-spacing: 2px;
+
+      :global(.iconfont) {
+        font-size: 26px;
+        display: inline-block;
+        margin-right: 5px;
+      }
+    }
+
+    .phone {
+      position: absolute;
+      right: 10px;
+      :global(.anticon-phone) {
+        display: inline-block;
+        margin-right: 5px;
+        color: @primary-color;
+      }
+    }
+  }
+
+  .navs {
+    background: @primary-color;
+
+    > div {
+      position: relative;
+      // width: 800px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      a {
+        color: white;
+        display: inline-block;
+        font-size: 15px;
+        padding: 0 10px;
+        cursor: pointer;
+      }
+
+      .user {
+        position: absolute;
+        right: 10px;
+        color: white;
+      }
+    }
+  }
+
+  .body {
+    height: calc(~'100% - 50px - 32px');
+    overflow: hidden;
+    display: flex;
+
+    > div {
+      height: 100%;
+    }
+
+    .datatree {
+      width: 320px;
+      padding: 5px 10px;
+      box-shadow: 1px 0 1px 0 @border-color;
+      .header {
+        color: @primary-color;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        border-bottom: 2px solid @primary-color;
+        font-size: 18px;
+        letter-spacing: 2px;
+      }
+      .search {
+        height: 50px;
+
+        display: flex;
+        align-items: center;
+      }
+
+      .tree {
+        height: calc(~'100% - 50px - 45px');
+        overflow: auto;
+        border-top: @border;
+        border-bottom: @border;
+        border-radius: 3px;
+      }
+    }
+
+    .setting {
+      width: calc(~'100% - 320px');
+      height: 100%;
+    }
+  }
 }

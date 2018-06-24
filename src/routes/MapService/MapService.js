@@ -4,6 +4,7 @@ import { Link } from 'dva/router';
 import { Button, Input, Icon, notification } from 'antd';
 import L from '../../common/leaflet.extends.js';
 import st from './MapService.less';
+import navs from '../../common/navs.js';
 import HeaderBar from './HeaderBar.js';
 import LayerControl from './LayerControl.js';
 import Toolbar from './Toolbar.js';
@@ -331,11 +332,7 @@ class MapService extends Component {
           <span style={{ marginRight: 10 }}>
             ©地理信息公共服务平台&emsp;{/* @智慧新吴科技有限公司 */}
           </span>
-          <Link to="/home">首&ensp;页</Link>
-          <Link to="/data">数据服务</Link>
-          <Link to="/home">分析服务</Link>
-          <Link to="/home">制图服务</Link>
-          <Link to="/developer">应用开发</Link>
+          {navs.map(i => i.component)}
         </div>
         <HeaderBar
           onLayerClick={e => this.toggleLayerControl()}

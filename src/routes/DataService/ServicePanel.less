@@ -1,0 +1,65 @@
+@import '../../default.less';
+
+.servicepanel {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  padding: 10px;
+  overflow: auto;
+
+  .servicedetails {
+    //height: 100px;
+    // border-bottom: 1px solid #aaa;
+    padding: 0 5px;
+    .serviceheader {
+      color: @primary-color;
+      font-size: 16px;
+      font-weight: 700;
+
+      border-bottom: @border;
+      padding-bottom: 5px;
+    }
+
+    .servicedetialsitem {
+      display: flex;
+      border-bottom: @border;
+      padding: 10px 0;
+      > div:first-child {
+        font-size: 15px;
+      }
+    }
+  }
+
+  .serivceparams {
+    // border-bottom: 1px solid #aaa;
+    //height: 100px;
+    .serviceheader {
+      color: @primary-color;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 10px 0;
+      border-bottom: @border;
+      padding-bottom: 5px;
+    }
+
+    .paramsitem {
+      display: flex;
+      height: 40px;
+      align-items: center;
+      > div:first-child {
+        width: 120px;
+        text-align: left;
+      }
+    }
+  }
+
+  .servicetest {
+    max-height: 500px;
+    overflow: auto;
+    font-size: 12px;
+    color: black;
+    border-top: 1px solid @border-color;
+    margin-top: 10px;
+    padding: 5px;
+  }
+}

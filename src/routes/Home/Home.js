@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Input, Carousel, Button, Icon } from 'antd';
+import navs from '../../common/navs.js';
 import st from './Home.less';
 
 class Home extends Component {
   componentDidMount() {
     setInterval(e => {
-      if (!this.in) this.carousel.next();
+      if (!this.in && this.carousel) this.carousel.next();
     }, 7000);
 
     this.slides.onmouseenter = e => {
@@ -29,25 +30,10 @@ class Home extends Component {
           </div>
         </div>
         <div className={st.navs}>
-          <span>
-            首&ensp;页<span />
-          </span>
-          <span>
-            地图服务<span />
-          </span>
-          <span>
-            数据服务<span />
-          </span>
-          <span>
-            分析服务<span />
-          </span>
-          <span>
-            制图服务<span />
-          </span>
-          <span>
-            应用开发<span />
-          </span>
-          <Input placeholder="搜索..." />
+          <div>
+            {navs.map(i => i.component)}
+            <Input placeholder="搜索..." />
+          </div>
         </div>
         <div
           ref={e => {

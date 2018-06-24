@@ -28,4 +28,33 @@ body {
   .ant-spin-container {
     overflow: visible !important;
   }
+  .ant-popover-title {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  /*必须有才能应用其他样式*/
+  *::-webkit-scrollbar {
+    width: 8px;
+  }
+  /*滚动条的轨道*/
+  ::-webkit-scrollbar-track {
+    background-color: #eee;
+    /*可设置border、background等属性*/
+  }
+  /*上下按钮的样式*/
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  /*拖动条的样式*/
+  ::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    /*无法响应cursor、动画效果、宽度等*/
+    width: 10px;
+    cursor: pointer;
+    transition: 0.3s all ease;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #888;
+  }
 }

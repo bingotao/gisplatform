@@ -25,6 +25,7 @@ function RouterConfig({ history, app }) {
     <LocaleProvider locale={zhCN}>
       <ConnectedRouter history={history}>
         <Switch>
+          <Route exact path="/" component={Home} />
           <Route path="/home" component={Home} />
           <Route path="/mapservice" component={MapService} />
           <Route path="/dataservice" component={DataService} />
