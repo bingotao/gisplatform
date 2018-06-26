@@ -11,9 +11,6 @@ import Toolbar from './Toolbar.js';
 import IdentifyPopup from './IdentifyPopup.js';
 import ApplyServices from './ApplyServices.js';
 
-let x = 120.41513442993164,
-  y = 31.506900787353516,
-  zoom = 12;
 
 let icon0 = L.divIcon({
     className: 'div-icon0',
