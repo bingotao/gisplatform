@@ -1,0 +1,38 @@
+@import '../../default.less';
+
+.layerspanel {
+  height: 280px;
+  width: 230px;
+  overflow: auto;
+
+  :global {
+    .ant-tree-checkbox-disabled {
+      display: none;
+    }
+
+    .anticon-setting {
+      margin-left: 10px;
+    }
+  }
+}
+
+.layersetting {
+  padding: 0 10px;
+  > div {
+    padding: 5px 0;
+    margin: 5px 0;
+    &:not(:first-child) {
+      border-top: @border;
+    }
+    &:first-child {
+      padding-top: 0;
+    }
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+  .layercontrol {
+    display: flex;
+    align-items: center;
+  }
+}

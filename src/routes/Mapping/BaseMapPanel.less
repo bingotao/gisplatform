@@ -1,0 +1,38 @@
+@import '../../default.less';
+.basemappanel {
+  width: auto;
+  display: flex;
+
+  :global {
+    .basemapitem {
+      position: relative;
+      margin: 0 5px;
+      border-radius: 3px;
+      overflow: hidden;
+      height: 100px;
+      width: 140px;
+      cursor: pointer;
+      transition: @transition;
+      box-shadow: 0 0 0 1px #eee;
+      &.active,
+      &:hover {
+        box-shadow: 0 0 8px 1px #aaa;
+      }
+
+      > div {
+        position: absolute;
+        height: 40px;
+        width: 100%;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        color: white;
+        background: rgba(0, 0, 0, 0.3);
+        transition: @transition;
+        opacity: 1;
+      }
+    }
+  }
+}

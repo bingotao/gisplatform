@@ -11,7 +11,7 @@ import {
   notification,
   Button,
 } from 'antd';
-import { baseMaps, mapServices, xzq } from '../../common/mapServices.js';
+import { getBaseMaps, getXZQ, getMapServices } from '../../common/mapServices.js';
 import st from './LayerControl.less';
 import LayerDesciption from './LayerDescription';
 import IdentifyPopup from './IdentifyPopup';
@@ -19,6 +19,9 @@ import IdentifyPopup from './IdentifyPopup';
 const { Search } = Input;
 const RadioGroup = Radio.Group;
 const { Panel } = Collapse;
+const mapServices = getMapServices();
+const baseMaps = getBaseMaps();
+const xzq = getXZQ();
 
 class LayerControl extends Component {
   state = {

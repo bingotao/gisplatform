@@ -20,7 +20,8 @@ function RouterConfig({ history, app }) {
   const Home = routerData['/home'].component;
   const MapService = routerData['/mapservice'].component;
   const DataService = routerData['/dataservice'].component;
-  const Constructing=routerData['/constructing'].component;
+  const Mapping = routerData['/mapping'].component;
+  const Constructing = routerData['/constructing'].component;
 
   return (
     <LocaleProvider locale={zhCN}>
@@ -29,6 +30,7 @@ function RouterConfig({ history, app }) {
           <Route exact path="/" component={Home} />
           <Route path="/home" component={Home} />
           <Route path="/mapservice" component={MapService} />
+          <Route path="/mapping" component={Mapping} />
           <Route path="/dataservice" component={DataService} />
           <Route component={Constructing} />
           {/* <Route path="/user" component={UserLayout} />

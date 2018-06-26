@@ -66,10 +66,12 @@ export const getRouterData = app => {
     '/dataservice': {
       component: dynamicWrapper(app, [], () => import('../routes/DataService/DataService')),
     },
+    '/mapping': {
+      component: dynamicWrapper(app, [], () => import('../routes/Mapping/Mapping')),
+    },
     '/constructing': {
       component: dynamicWrapper(app, [], () => import('../routes/Constructing/Constructing')),
     },
-   
   };
   
 

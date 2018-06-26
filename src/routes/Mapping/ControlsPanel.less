@@ -1,0 +1,20 @@
+@import '../../default.less';
+
+.controlspanel {
+  display: flex;
+  > div {
+    border: @border;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 0 5px;
+    transition: @transition;
+    &:hover {
+      box-shadow: @box-shadow;
+    }
+
+    h4 {
+      border-bottom: @border;
+      padding-bottom: 5px;
+    }
+  }
+}

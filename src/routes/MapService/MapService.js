@@ -10,7 +10,9 @@ import LayerControl from './LayerControl.js';
 import Toolbar from './Toolbar.js';
 import IdentifyPopup from './IdentifyPopup.js';
 import ApplyServices from './ApplyServices.js';
+import { mapConfig } from '../../common/config.js';
 
+let { x, y, zoom } = mapConfig;
 
 let icon0 = L.divIcon({
     className: 'div-icon0',
