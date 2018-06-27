@@ -1,0 +1,27 @@
+@import '../../default.less';
+.drawmarkerpanel {
+  width: 310px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  > div {
+    height: 42px;
+    width: 34px;
+    padding: 0 2px;
+    border: @border;
+    border-radius: 3px;
+    margin: 3px 5px;
+    cursor: pointer;
+    transition: @transition;
+    :global {
+      .ct-icon {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    &:hover {
+      box-shadow: @box-shadow;
+    }
+  }
+}

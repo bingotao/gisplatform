@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Tree, Icon, Popover, Slider, Checkbox } from 'antd';
+import { Tree, Icon, Popover, Slider, Checkbox, Switch } from 'antd';
 import { getMapServices } from '../../common/mapServices';
 import st from './LayersPanel.less';
 const TreeNode = Tree.TreeNode;
@@ -50,7 +50,7 @@ class LayerSetting extends Component {
         </div>
         {layer.heatLayerSource !== undefined ? (
           <div>
-            <Checkbox
+            {/* <Checkbox
               ref={e => {
                 this.checkHeat = e;
               }}
@@ -61,7 +61,16 @@ class LayerSetting extends Component {
               }}
             >
               热力图
-            </Checkbox>
+            </Checkbox> */}
+            <span>
+              <Switch
+                onChange={e => {
+                  this.setState({ heat: e });
+                  this.toggleHeatlayer(e);
+                }}
+                size="small"
+              />&ensp;热力图
+            </span>
             <div className={st.layercontrol}>
               半&emsp;径：<Slider
                 style={{ width: 200 }}
@@ -92,7 +101,7 @@ class LayerSetting extends Component {
         ) : null}
         {layer.clusterLayerSource !== undefined ? (
           <div>
-            <Checkbox
+            {/* <Checkbox
               ref={e => {
                 this.checkCluster = e;
               }}
@@ -102,7 +111,16 @@ class LayerSetting extends Component {
               }}
             >
               聚合图
-            </Checkbox>
+            </Checkbox> */}
+            <span>
+              <Switch
+                onChange={e => {
+                  this.setState({ heat: e });
+                  this.toggleClusterlayer(e);
+                }}
+                size="small"
+              />&ensp;聚合图
+            </span>
           </div>
         ) : null}
       </div>

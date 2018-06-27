@@ -1,0 +1,31 @@
+@import '../../default.less';
+
+.drawtextpopup {
+  > div {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+
+    &:not(:first-child) {
+      border-top: @border;
+    }
+    > div {
+      > input {
+        width: 200px;
+      }
+    }
+    > button {
+      width: 100%;
+    }
+  }
+}
+
+:global {
+  .ct-text-divicon {
+    border-radius: 50%;
+    background: rgba(255, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

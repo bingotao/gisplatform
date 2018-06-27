@@ -1,0 +1,31 @@
+@import '../../default.less';
+
+.drawmarkerpopup {
+  font-size: 15px;
+  > div {
+    padding: 5px;
+    > div {
+      margin: 5px 0;
+      display: flex;
+      align-items: baseline;
+      input,
+      textarea {
+        width: 240px;
+      }
+    }
+    &:not(:first-child) {
+      border-top: @border;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+  :global {
+    .ct-icon {
+      height: 42px;
+      width: 30px;
+      cursor: pointer;
+    }
+  }
+}

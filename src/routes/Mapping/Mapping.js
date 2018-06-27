@@ -4,11 +4,18 @@ import { Icon, Popover } from 'antd';
 import BaseMapPanel from './BaseMapPanel';
 import ControlsPanel from './ControlsPanel';
 import LayersPanel from './LayersPanel';
+
+import DrawMarkerPanel from './DrawMarkerPanel';
+import DrawMarkerPopup from './DrawMarkerPopup';
+
+import DrawTextPopup from './DrawTextPopup';
+
 import st from './Mapping.less';
 import { mapConfig } from '../../common/config.js';
 import { getXZQ } from '../../common/mapServices.js';
 let { x, y, zoom } = mapConfig;
 let xzq = getXZQ();
+
 class Mapping extends Component {
   state = {
     mapReady: false,
@@ -27,9 +34,43 @@ class Mapping extends Component {
     this.map = map;
     xzq.addTo(map);
     this.setState({ mapReady: true });
-    map.on('click', e => {
+    $(map).on('click', e => {
       this.setState({ layerControl: false });
     });
+
+    let drawGroup = L.layerGroup().addTo(map);
+    this.drawGroup = drawGroup;
+
+    this.drawMarker = new L.Draw.Marker(map);
+    this.drawMarker.on(L.Draw.Event.CREATED, e => {
+      e.layer.addTo(drawGroup);
+      DrawMarkerPopup.init(e.layer, this.currentIcon);
+      e.layer.openPopup();
+    });
+
+    this.drawText = new L.Draw.Marker(map, {
+      icon: L.divIcon({ className: 'ct-text-divicon', iconSize: [10, 10] }),
+    });
+    this.drawText.on(L.Draw.Event.CREATED, e => {
+      e.layer.addTo(drawGroup);
+      DrawTextPopup.init(e.layer);
+      e.layer.openPopup();
+    });
+  }
+
+  iconClick(i) {
+    this.currentIcon = i;
+    this.drawMarker.setOptions({ icon: i.icon });
+    this.drawMarker.enable();
+  }
+
+  enableDrawText() {
+    this.drawText.enable();
+  }
+
+  preview() {
+    var layers = this.drawGroup.getLayers();
+    console.log(layers[0].component.getOptions());
   }
 
   componentDidMount() {
@@ -68,7 +109,11 @@ class Mapping extends Component {
             placement="right"
           >
             <div
-              onClick={e => this.setState({ layerControl: true })}
+              onClick={e => {
+                this.setState({ layerControl: true });
+                // e.stopPropagation();
+                // e.nativeEvent.stopImmediatePropagation();
+              }}
               className="iconfont icon-shuju2"
             >
               图层
@@ -84,13 +129,28 @@ class Mapping extends Component {
             <div className="iconfont icon-kefujingli-">控件</div>
           </Popover>
 
-          <div className="iconfont icon-wenzi">文字</div>
-          <div className="iconfont icon-location">绘点</div>
+          <div onClick={this.enableDrawText.bind(this)} className="iconfont icon-wenzi">
+            文字
+          </div>
+
+          <Popover
+            title="绘点"
+            content={
+              mapReady ? (
+                <DrawMarkerPanel iconClick={e => this.iconClick(e)} map={this.map} />
+              ) : null
+            }
+            placement="right"
+          >
+            <div className="iconfont icon-location">绘点</div>
+          </Popover>
           <div className="iconfont icon-kongjianjuliceliang">绘线</div>
           <div className="iconfont icon-mianji">绘面</div>
           <div className="iconfont icon-biaoti">标题</div>
           <div className="iconfont icon-miaoshu">描述</div>
-          <div className="anticon anticon-desktop">预览</div>
+          <div onClick={this.preview.bind(this)} className="anticon anticon-desktop">
+            预览
+          </div>
         </div>
       </div>
     );
