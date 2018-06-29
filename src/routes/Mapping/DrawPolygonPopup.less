@@ -1,0 +1,26 @@
+@import '../../default.less';
+
+.drawpolygonpopup {
+  width: 300px;
+
+  > div {
+    padding: 10px;
+    &:not(:first-child) {
+      border-top: @border;
+    }
+    > div {
+      > div {
+        display: flex;
+        align-items: center;
+        margin: 5px 0;
+        > span {
+          width: 60px;
+        }
+      }
+    }
+    
+    > button {
+      width: 48%;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+@import '../../default.less';
+
+.drawlinepanel {
+  width: 300px;
+  > div {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    > div:first-child {
+      width: 60px;
+      text-align: right;
+    }
+
+    > div:last-child {
+      padding: 0 10px;
+      > input {
+        width: 200px;
+      }
+    }
+  }
+}

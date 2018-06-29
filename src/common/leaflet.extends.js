@@ -170,11 +170,11 @@ L.Control.MousePosition = L.Control.extend({
     var lng = this.options.lngFormatter
       ? this.options.lngFormatter(e.latlng.lng)
       : //L.Util.formatNum(e.latlng.lng, this.options.numDigits);
-      e.latlng.lng.toFixed(this.options.numDigits);
+        e.latlng.lng.toFixed(this.options.numDigits);
     var lat = this.options.latFormatter
       ? this.options.latFormatter(e.latlng.lat)
       : //L.Util.formatNum(e.latlng.lat, this.options.numDigits);
-      e.latlng.lat.toFixed(this.options.numDigits);
+        e.latlng.lat.toFixed(this.options.numDigits);
 
     var value = this.options.lngFirst
       ? `( x : ${lng} ${this.options.separator} y : ${lat} )`
@@ -198,5 +198,20 @@ L.Map.addInitHook(function() {
 L.control.mousePosition = function(options) {
   return new L.Control.MousePosition(options);
 };
+
+L.Control.Attribution.include({
+  setAttribution: function(text) {
+    if (text === undefined || text === null) {
+      return this;
+    }
+
+    this._attributions = {};
+    this._attributions[text] = 1;
+
+    this._update();
+
+    return this;
+  },
+});
 
 export default L;

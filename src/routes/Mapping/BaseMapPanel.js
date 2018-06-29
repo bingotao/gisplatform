@@ -22,6 +22,11 @@ class BaseMapPanel extends Component {
       bm.layer.remove();
     }
     baseMaps[index].layer.addTo(map);
+    this.baseMapId = baseMaps[index].id;
+  }
+
+  getOptions() {
+    return this.baseMapId;
   }
 
   componentDidMount() {
@@ -29,7 +34,6 @@ class BaseMapPanel extends Component {
   }
 
   render() {
-    
     return (
       <div
         ref={e => {

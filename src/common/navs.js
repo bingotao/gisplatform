@@ -16,11 +16,11 @@ let navs = [
     name: '数据服务',
     to: '/dataservice',
   },
-  {
-    id: 'analysize',
-    name: '分析服务',
-    to: '/analysize',
-  },
+  // {
+  //   id: 'analysize',
+  //   name: '分析服务',
+  //   to: '/analysize',
+  // },
   {
     id: 'mapping',
     name: '制图服务',
@@ -30,6 +30,11 @@ let navs = [
     id: 'developping',
     name: '应用开发',
     to: '/developping',
+  },
+  {
+    id: 'servicemanager',
+    name: '服务管理',
+    to: '/servicemanager',
   },
 ];
 

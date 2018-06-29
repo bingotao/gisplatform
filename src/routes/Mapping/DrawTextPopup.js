@@ -22,7 +22,7 @@ class DrawTextPopup extends Component {
       L.divIcon({
         className: 'ct-text-divicon',
         iconSize: [10, 10],
-        html: `<div style="color:${color};font-size:${fontSize};font-family:${fontFamily};font-style:${fontStyle};font-weight:${fontWeight}">${text}</div>`,
+        html: `<nobr style="color:${color};font-size:${fontSize};font-family:${fontFamily};font-style:${fontStyle};font-weight:${fontWeight}">${text}</nobr>`,
       })
     );
   }
@@ -30,6 +30,7 @@ class DrawTextPopup extends Component {
   getOptions() {
     let { text, color, fontSize, fontFamily, fontStyle, fontWeight } = this;
     return {
+      type: 'text',
       text,
       text,
       color,
