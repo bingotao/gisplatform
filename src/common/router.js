@@ -69,6 +69,9 @@ export const getRouterData = app => {
     '/mapping': {
       component: dynamicWrapper(app, [], () => import('../routes/Mapping/Mapping')),
     },
+    '/mappingviewer': {
+      component: dynamicWrapper(app, [], () => import('../routes/MappingViewer/MappingViewer')),
+    },
     '/constructing': {
       component: dynamicWrapper(app, [], () => import('../routes/Constructing/Constructing')),
     },

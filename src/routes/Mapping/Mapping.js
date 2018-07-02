@@ -5,6 +5,8 @@ import BaseMapPanel from './BaseMapPanel';
 import ControlsPanel from './ControlsPanel';
 import LayersPanel from './LayersPanel';
 
+import TitlePanel, { MapTitle } from './TitlePanel';
+
 import DrawMarkerPanel from './DrawMarkerPanel';
 import DrawMarkerPopup from './DrawMarkerPopup';
 
@@ -26,6 +28,7 @@ class Mapping extends Component {
   state = {
     mapReady: false,
     layerControl: false,
+    mapTitle: {},
   };
 
   initMap() {
@@ -44,7 +47,7 @@ class Mapping extends Component {
       this.setState({ layerControl: false });
     });
 
-    let drawGroup = L.layerGroup().addTo(map);
+    let drawGroup = L.layerGroup([], { pane: 'layerspane' }).addTo(map);
     this.drawGroup = drawGroup;
 
     /* 绘制 Marker */
@@ -158,7 +161,19 @@ class Mapping extends Component {
     if (this.controlsPanel) {
       config.control = this.controlsPanel.getOptions();
     }
-    console.log(config);
+    if (this.titlePanel) {
+      config.title = this.titlePanel.getOptions();
+    }
+    if (this.layerControl) {
+      config.layers = this.layerControl.getOptions();
+    }
+
+    config.mapState = {
+      center: this.map.getCenter(),
+      zoom: this.map.getZoom(),
+    };
+    store.set('mapping', config);
+    window.open('#/mappingviewer');
   }
 
   componentDidMount() {
@@ -166,7 +181,7 @@ class Mapping extends Component {
   }
 
   render() {
-    const { mapReady, layerControl } = this.state;
+    const { mapReady, layerControl, mapTitle } = this.state;
     return (
       <div className={st.mapping}>
         <div
@@ -175,14 +190,37 @@ class Mapping extends Component {
           ref={e => {
             this.mapDom = e;
           }}
-        />
+        >
+          <MapTitle
+            {...mapTitle}
+            ref={e => {
+              this.mapTitle = e;
+            }}
+          />
+        </div>
         <div className={st.toolbar}>
           <span className="iconfont icon-geographic-information">
             <span>在线制图</span>
           </span>
-          <div className="iconfont icon-biaoti">标题</div>
           <Popover
             trigger={'click'}
+            title="设置标题"
+            content={
+              <TitlePanel
+                onTitleChange={e => {
+                  this.setState({ mapTitle: e });
+                }}
+                ref={e => {
+                  this.titlePanel = e;
+                }}
+              />
+            }
+            placement="rightBottom"
+          >
+            <div className="iconfont icon-biaoti">标题</div>
+          </Popover>
+          <Popover
+            // trigger={'click'}
             defaultVisible={true}
             title="选择底图"
             content={
@@ -200,15 +238,24 @@ class Mapping extends Component {
             <div className="iconfont icon-map1">底图</div>
           </Popover>
           <Popover
-            trigger={'click'}
+            // trigger={'click'}
             title="选择图层"
-            visible={layerControl}
-            content={mapReady ? <LayersPanel map={this.map} /> : null}
+            // visible={layerControl}
+            content={
+              mapReady ? (
+                <LayersPanel
+                  ref={e => {
+                    this.layerControl = e;
+                  }}
+                  map={this.map}
+                />
+              ) : null
+            }
             placement="right"
           >
             <div
               onClick={e => {
-                this.setState({ layerControl: true });
+                // this.setState({ layerControl: true });
                 // e.stopPropagation();
                 // e.nativeEvent.stopImmediatePropagation();
               }}
@@ -262,8 +309,9 @@ class Mapping extends Component {
           </div>
 
           {/* <div className="iconfont icon-miaoshu">描述</div> */}
-          <div onClick={this.preview.bind(this)} className="anticon anticon-desktop">
-            预览
+          <div onClick={this.preview.bind(this)}>
+            <Icon type="share-alt" />
+            分享
           </div>
         </div>
       </div>

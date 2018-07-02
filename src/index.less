@@ -1,3 +1,5 @@
+@import './default.less';
+
 html,
 body,
 :global(#root) {
@@ -74,4 +76,28 @@ body {
     }
   }
 
+  .ct-text-divicon {
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ct-draw-popup {
+    width: 300px;
+    > h3 {
+      color: @primary-color;
+      font-weight: 700;
+      font-size: 15px;
+      margin: 10px 0;
+    }
+    > div {
+      border: @border;
+      border-radius: 3px;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+  }
 }

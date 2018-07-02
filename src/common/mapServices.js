@@ -228,6 +228,7 @@ const getMapServices = () => {
           date: '2018年3月22日',
           typeAlias: 'ArcGIS动态地图服务',
           applyable: true,
+          featureLayerSource: 0,
         },
       ],
     },

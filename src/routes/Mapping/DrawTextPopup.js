@@ -99,11 +99,11 @@ class DrawTextPopup extends Component {
                 this.setText();
               }}
             >
-              <RadioButton value="14px">14px</RadioButton>
               <RadioButton value="18px">18px</RadioButton>
               <RadioButton value="24px">24px</RadioButton>
               <RadioButton value="32px">32px</RadioButton>
               <RadioButton value="40px">40px</RadioButton>
+              <RadioButton value="50px">50px</RadioButton>
             </RadioGroup>
           </div>
         </div>

@@ -21,6 +21,7 @@ function RouterConfig({ history, app }) {
   const MapService = routerData['/mapservice'].component;
   const DataService = routerData['/dataservice'].component;
   const Mapping = routerData['/mapping'].component;
+  const MappingViewer = routerData['/mappingviewer'].component;
   const Constructing = routerData['/constructing'].component;
 
   return (
@@ -32,6 +33,7 @@ function RouterConfig({ history, app }) {
           <Route path="/mapservice" component={MapService} />
           <Route path="/mapping" component={Mapping} />
           <Route path="/dataservice" component={DataService} />
+          <Route path="/mappingviewer" component={MappingViewer} />
           <Route component={Constructing} />
           {/* <Route path="/user" component={UserLayout} />
           <AuthorizedRoute

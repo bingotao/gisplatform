@@ -26,7 +26,6 @@
     box-shadow: 0 0 5px 0 @border-color;
     z-index: 9999;
 
-
     > span {
       &::before {
         display: flex;
@@ -51,6 +50,11 @@
       justify-content: center;
       cursor: pointer;
       transition: @transition;
+
+      > i {
+        display: inline-block;
+        margin-right: 5px;
+      }
 
       &::before {
         display: inline-block;

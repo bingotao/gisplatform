@@ -1,10 +1,37 @@
 @import '../../default.less';
 
 .layerspanel {
-  height: 280px;
-  width: 230px;
-  overflow: auto;
+  display: flex;
 
+  height: 280px;
+  overflow: auto;
+  > div {
+    width: 280px;
+    height: 100%;
+    overflow: auto;
+  }
+
+  .layers {
+    border-left: @border;
+    padding: 5px 0 5px 10px;
+
+    h3 {
+      height: 30px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      border-bottom: @border;
+    }
+    .layercontainer {
+      height: calc(~'100% - 40px');
+      overflow: auto;
+    }
+
+    .layercontrol {
+      display: flex;
+      align-items: center;
+    }
+  }
   :global {
     .ant-tree-checkbox-disabled {
       display: none;
@@ -13,30 +40,34 @@
     .anticon-setting {
       margin-left: 10px;
     }
+
+    .anticon-tool {
+      margin-left: 10px;
+    }
+    .ant-collapse {
+      margin: 5px 0;
+      .ant-collapse-header {
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+        .arrow {
+          line-height: 34px !important;
+        }
+        .anticon-close-circle {
+          position: absolute;
+          right: 10px;
+          top: 8px;
+          color: #666;
+        }
+      }
+    }
   }
 }
 
-.layersetting {
-  padding: 0 10px;
-  > div {
-    padding: 5px 0;
+.layeractions {
+  // display: flex;
+  // flex-flow: column;
+  > button {
+    display: block;
     margin: 5px 0;
-    &:not(:first-child) {
-      border-top: @border;
-    }
-    &:first-child {
-      padding-top: 0;
-    }
-    &:last-child {
-      padding-bottom: 0;
-    }
-    > span {
-      display: flex;
-      align-items: center;
-    }
-  }
-  .layercontrol {
-    display: flex;
-    align-items: center;
   }
 }
