@@ -11,6 +11,14 @@ class ServicePanel extends Component {
     results: null,
   };
 
+  addToApplyList() {
+    const { addToApplyList, service } = this.props;
+
+    if (addToApplyList) {
+      addToApplyList(service);
+    }
+  }
+
   testService() {
     var { url, params } = this.props.service;
     if (url) {
@@ -29,20 +37,6 @@ class ServicePanel extends Component {
       }
       newParams.where = where.length ? where.join(' and ') : '1=1';
       message.loading('服务请求中，请稍后...');
-      //   $.post(
-      //     url,
-      //     newParams,
-      //     e => {
-      //       this.setState({ results: e });
-      //     },
-      //     'text'
-      //   )
-      //   .error(e => {
-      //     notification.error({
-      //       description: '请求超时',
-      //       message: '错误',
-      //     });
-      //   });
 
       $.ajax(url, {
         data: newParams,
@@ -126,6 +120,10 @@ class ServicePanel extends Component {
           {this.getParamsCmps()}
           <Button type="primary" onClick={e => this.testService()}>
             测试
+          </Button>
+          &emsp;
+          <Button type="primary" onClick={e => this.addToApplyList()}>
+            添加至申请单
           </Button>
         </div>
         <div className={st.servicetest}>

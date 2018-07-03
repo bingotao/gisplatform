@@ -109,4 +109,57 @@
       height: 100%;
     }
   }
+
+  .applylist {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 260px;
+    z-index: 999;
+    background: white;
+    box-shadow: @box-shadow;
+    padding: 10px;
+    transition: @transition;
+    display: none;
+
+    &:global(.active) {
+      display: block;
+    }
+    > h3 {
+      color: @primary-color;
+      font-weight: 700;
+      border-bottom: @border;
+      padding-bottom: 5px;
+      margin-bottom: 5px;
+    }
+    > div {
+      > h4 {
+        margin-top: 10px;
+      }
+      > div {
+        border: @border;
+        border-radius: 3px;
+        padding: 5px 10px;
+
+        > span {
+          position: relative;
+          display: block;
+          padding: 5px 10px;
+          color: @primary-color;
+
+          > i {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    > button {
+      margin-top: 10px;
+      width: 100%;
+    }
+  }
 }

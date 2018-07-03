@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import L from '../../common/leaflet.extends.js';
-import { Icon, Popover } from 'antd';
+import { Icon, Popover, Modal } from 'antd';
 import BaseMapPanel from './BaseMapPanel';
 import ControlsPanel from './ControlsPanel';
 import LayersPanel from './LayersPanel';
@@ -173,7 +173,26 @@ class Mapping extends Component {
       zoom: this.map.getZoom(),
     };
     store.set('mapping', config);
-    window.open('#/mappingviewer');
+
+    let url = '#/mappingviewer?id=' + (Math.random() * 100).toFixed(0);
+    Modal.confirm({
+      title: '确定',
+      content: (
+        <div>
+          分享链接已生成成功，是否打开链接预览？
+          <br />
+          <a target="_blank" href={url}>
+            链接
+          </a>
+        </div>
+      ),
+      cancelText: '取消',
+      okText: '确定',
+      onOk() {
+        window.open(url);
+      },
+      onCancel() {},
+    });
   }
 
   componentDidMount() {

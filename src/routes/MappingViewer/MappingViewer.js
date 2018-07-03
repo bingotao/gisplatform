@@ -50,16 +50,19 @@ class MappingViewer extends Component {
       }
     }
 
-    // add layers
-    for (let i of layers) {
-      let layer = this.getLayer(i);
-      if (layer) layer.addTo(map);
+    if (layers) {
+      // add layers
+      for (let i of layers) {
+        let layer = this.getLayer(i);
+        if (layer) layer.addTo(map);
+      }
     }
-
-    // add draw layers
-    for (let i of drawLayers) {
-      let layer = this.getDrawLayer(i);
-      if (layer) layer.addTo(map);
+    if (drawLayers) {
+      // add draw layers
+      for (let i of drawLayers) {
+        let layer = this.getDrawLayer(i);
+        if (layer) layer.addTo(map);
+      }
     }
   }
 
