@@ -1,0 +1,20 @@
+@import '../../default.less';
+
+.backtop{
+    position: absolute;
+    left:20px;
+    bottom: 20px;
+    background-color:#f8f8f8;
+    color: #595959;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: none;
+    cursor: pointer;
+    box-shadow: @box-shadow;
+    transition: 0.3s;
+    &:hover{
+        background-color: #1890ff;
+        color: white;
+        transform: translateX(-3px) translateY(-3px);
+    }
+}

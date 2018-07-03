@@ -53,8 +53,6 @@ const dynamicWrapper = (app, models, component) => {
   });
 };
 
-
-
 export const getRouterData = app => {
   const routerConfig = {
     '/home': {
@@ -72,11 +70,16 @@ export const getRouterData = app => {
     '/mappingviewer': {
       component: dynamicWrapper(app, [], () => import('../routes/MappingViewer/MappingViewer')),
     },
+    '/developping': {
+      component: dynamicWrapper(app, [], () => import('../routes/Developping/Developping')),
+    },
+    '/servicemanager': {
+      component: dynamicWrapper(app, [], () => import('../routes/ServiceManager/ServiceManager')),
+    },
     '/constructing': {
       component: dynamicWrapper(app, [], () => import('../routes/Constructing/Constructing')),
     },
   };
-  
 
   // Route configuration data
   // eg. {name,authority ...routerConfig }

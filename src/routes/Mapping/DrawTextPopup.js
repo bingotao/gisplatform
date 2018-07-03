@@ -154,7 +154,7 @@ class DrawTextPopup extends Component {
 }
 
 DrawTextPopup.options = {
-  fontSize: '14px',
+  fontSize: '18px',
   fontFamily: '宋体',
   fontWeight: 'normal',
   color: '#ff0000',
