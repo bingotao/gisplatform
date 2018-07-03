@@ -65,6 +65,46 @@ const getBaseMaps = () => {
   };
 };
 
+const getBaseMaps2 = () => {
+  return {
+    id: 'baseMap',
+    name: '底图',
+    children: [
+      {
+        id: 'tdtgj_vec_w',
+        name: '天地图·国家-地图',
+        layer: L.tileLayer.tdtgj_vec_w(),
+        img: img0,
+      },
+      {
+        id: 'tdtgj_img_w',
+        name: '天地图·国家-影像',
+        layer: L.tileLayer.tdtgj_img_w(),
+        on: true,
+        img: img1,
+      },
+      {
+        id: 'mapbox_dark',
+        name: '深色底图（定制）',
+        layer: L.mapboxGL({
+          style: 'mapbox://styles/bingotao/cja7i6f7p092n2rmxhf8qdymc',
+          accessToken: mapboxAccessToken,
+        }),
+        img: img2,
+      },
+      {
+        id: 'mapbox_light',
+        name: '浅色底图（定制）',
+        layer: L.mapboxGL({
+          style: 'mapbox://styles/bingotao/cjivckkk36pzs2spgyxhqtqyq',
+          accessToken: mapboxAccessToken,
+        }),
+        img: img3,
+      },
+    ],
+  };
+};
+
 const initLayers = i => {
   switch (i.type) {
     case 'esri/dynamic':
@@ -284,4 +324,4 @@ const getMapServices = () => {
   return mapServices;
 };
 
-export { getBaseMaps, getXZQ, getMapServices };
+export { getBaseMaps, getBaseMaps2, getXZQ, getMapServices };

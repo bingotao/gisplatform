@@ -31,7 +31,7 @@ L.tileLayer.tdtjs_img = options =>
 L.tileLayer.tdtjs_vec = options =>
   L.layerGroup([L.tileLayer.tdtjs_veco(options), L.tileLayer.tdtjs_veca(options)]);
 
-// 天地图·国家
+// 天地图·国家 4490
 L.tileLayer.tdtgj_imgo = options =>
   L.tileLayer('http://t{s}.tianditu.com/DataServer?T=img_c&x={x}&y={y}&l={z}', {
     ...options,
@@ -60,6 +60,36 @@ L.tileLayer.tdtgj_img = options =>
   L.layerGroup([L.tileLayer.tdtgj_imgo(options), L.tileLayer.tdtgj_imga(options)]);
 L.tileLayer.tdtgj_vec = options =>
   L.layerGroup([L.tileLayer.tdtgj_veco(options), L.tileLayer.tdtgj_veca(options)]);
+
+// 天地图国家 900913
+L.tileLayer.tdtgj_imgo_w = options =>
+  L.tileLayer('http://t{s}.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}', {
+    ...options,
+    subdomains: ['0', '1', '2', '3', '4', '5', '6', '7'],
+  });
+
+L.tileLayer.tdtgj_imga_w = options =>
+  L.tileLayer('http://t{s}.tianditu.com/DataServer?T=cia_w&x={x}&y={y}&l={z}', {
+    ...options,
+    subdomains: ['0', '1', '2', '3', '4', '5', '6', '7'],
+  });
+
+L.tileLayer.tdtgj_veco_w = options =>
+  L.tileLayer('http://t{s}.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}', {
+    ...options,
+    subdomains: ['0', '1', '2', '3', '4', '5', '6', '7'],
+  });
+
+L.tileLayer.tdtgj_veca_w = options =>
+  L.tileLayer('http://t{s}.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}', {
+    ...options,
+    subdomains: ['0', '1', '2', '3', '4', '5', '6', '7'],
+  });
+
+L.tileLayer.tdtgj_img_w = options =>
+  L.layerGroup([L.tileLayer.tdtgj_imgo_w(options), L.tileLayer.tdtgj_imga_w(options)]);
+L.tileLayer.tdtgj_vec_w = options =>
+  L.layerGroup([L.tileLayer.tdtgj_veco_w(options), L.tileLayer.tdtgj_veca_w(options)]);
 
 L.CRS.EPSG4490 = L.extend({}, L.CRS.EPSG4326, {
   code: 'EPSG:4490',
