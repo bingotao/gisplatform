@@ -24,13 +24,13 @@ const getBaseMaps = () => {
         id: 'tdtgj_vec',
         name: '天地图·国家-地图',
         layer: L.tileLayer.tdtgj_vec(),
+        on: true,
         img: img0,
       },
       {
         id: 'tdtgj_img',
         name: '天地图·国家-影像',
         layer: L.tileLayer.tdtgj_img(),
-        on: true,
         img: img1,
       },
       {
@@ -42,6 +42,18 @@ const getBaseMaps = () => {
         id: 'tdtjs_img',
         name: '天地图·江苏-影像',
         layer: L.tileLayer.tdtjs_img(),
+      },
+      {
+        id: 'tdtwx_vec',
+        name: '天地图·无锡-地图',
+        layer: L.tileLayer.tdtwx_vec(),
+        img: img0,
+      },
+      {
+        id: 'tdtwx_img',
+        name: '天地图·无锡-影像',
+        layer: L.tileLayer.tdtwx_img(),
+        img: img1,
       },
       {
         id: 'mapbox_dark',

@@ -329,7 +329,7 @@ class MapService extends Component {
         </div>
         <div className={st.navs}>
           <span style={{ marginRight: 10 }}>
-            ©地理信息公共服务平台&emsp;{/* @智慧新吴科技有限公司 */}
+            ©新吴区地理信息公共服务平台&emsp;{/* @智慧新吴科技有限公司 */}
           </span>
           {navs.map(i => i.component)}
         </div>

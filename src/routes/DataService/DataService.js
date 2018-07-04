@@ -84,7 +84,7 @@ class DataService extends Component {
       <div className={st.dataservice}>
         <div className={st.header}>
           <div className={st.logo}>
-            <span className="iconfont icon-geographic-information" />地理信息公共服务平台
+            <span className="iconfont icon-geographic-information" />新吴区地理信息公共服务平台
           </div>
           <div className={st.phone}>
             <Icon type="phone" />服务热线：0000-123456

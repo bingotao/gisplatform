@@ -20,7 +20,7 @@ class Home extends Component {
       <div className={st.home}>
         <div className={st.header}>
           <div className={st.logo}>
-            <span className="iconfont icon-geographic-information" />地理信息公共服务平台
+            <span className="iconfont icon-geographic-information" />新吴区地理信息公共服务平台
           </div>
           <div className={st.toolbar}>
             <span className={st.sign}>注册</span>
@@ -215,7 +215,7 @@ class Home extends Component {
           </div>
         </div>
         <div className={st.footer}>
-          <div>无锡市新吴区区政府主办 智慧新吴科技有限公司承办</div>
+          <div>无锡市新吴区区政府主办 江苏智慧新吴科技有限公司承办</div>
           <div>CopyRight © All Right Reserved. 盗版必究</div>
         </div>
       </div>

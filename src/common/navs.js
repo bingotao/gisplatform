@@ -23,7 +23,7 @@ let navs = [
   // },
   {
     id: 'mapping',
-    name: '制图服务',
+    name: '智图服务',
     to: '/mapping',
   },
   {

@@ -1,65 +1,70 @@
 @import '../../default.less';
 .developing {
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-    >.header {
-        position: relative; // width: 800px;
-        padding: 0 10px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        .logo {
-            color: @primary-color;
-            font-size: 24px;
-            letter-spacing: 2px;
-            :global(.iconfont) {
-                font-size: 26px;
-                display: inline-block;
-                margin-right: 5px;
-            }
-        }
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  > .header {
+    position: relative; // width: 800px;
+    padding: 0 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    .logo {
+      color: @primary-color;
+      font-size: 24px;
+      letter-spacing: 2px;
+      :global(.iconfont) {
+        font-size: 26px;
+        display: inline-block;
+        margin-right: 5px;
+      }
     }
-    .phone {
+  }
+  .phone {
+    position: absolute;
+    right: 10px;
+    :global(.anticon-phone) {
+      display: inline-block;
+      margin-right: 5px;
+      color: @primary-color;
+    }
+  }
+  .navs {
+    background: @primary-color;
+    > div {
+      position: relative; // width: 800px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      a {
+        color: white;
+        display: inline-block;
+        font-size: 15px;
+        padding: 2px;
+        margin: 0 10px;
+        border-bottom: 2px solid transparent;
+        cursor: pointer;
+        &:nth-child(5) {
+          border-bottom: 2px solid white;
+        }
+      }
+      .user {
         position: absolute;
         right: 10px;
-        :global(.anticon-phone) {
-            display: inline-block;
-            margin-right: 5px;
-            color: @primary-color;
-        }
+        color: white;
+      }
     }
-    .navs {
-        background: @primary-color;
-        >div {
-            position: relative; // width: 800px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            a {
-                color: white;
-                display: inline-block;
-                font-size: 15px;
-                padding: 0 10px;
-                cursor: pointer;
-            }
-            .user {
-                position: absolute;
-                right: 10px;
-                color: white;
-            }
+  }
+  .body {
+    padding: 10px 0px;
+    :global {
+      .ant-tabs-bar {
+        width: 110px;
+        div {
+          font-size: 1rem;
         }
+      }
     }
-    .body {
-        padding: 10px 0px;
-        :global {
-            .ant-tabs-bar {
-                width: 110px;
-                div {
-                    font-size: 1rem;
-                }
-            }
-        }
-    }
+  }
 }

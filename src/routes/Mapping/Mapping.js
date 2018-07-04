@@ -219,7 +219,7 @@ class Mapping extends Component {
         </div>
         <div className={st.toolbar}>
           <span className="iconfont icon-geographic-information">
-            <span>在线制图</span>
+            <span>在线智图</span>
           </span>
           <Popover
             trigger={'click'}

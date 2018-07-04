@@ -1,6 +1,36 @@
 import L from 'leaflet';
 import './leaflet.extends.less';
 
+// 天地图·无锡
+L.tileLayer.tdtwx_imgo = options =>
+  L.tileLayer(
+    `http://218.2.231.246/server/services/0163f82579500e35e87963f80676004c/arcgis/rest/tile/{z}/{y}/{x}?devAPiKey=016415ae11ff0e35e9c764158c44001b`,
+    options
+  );
+
+L.tileLayer.tdtwx_imga = options =>
+  L.tileLayer(
+    `http://218.2.231.246/server/services/0163f824ad4e0e35e87963f806760041/arcgis/rest/tile/{z}/{y}/{x}?devAPiKey=016415ae11ff0e35e9c764158c44001b`,
+    options
+  );
+
+L.tileLayer.tdtwx_veco = options =>
+  L.tileLayer(
+    `http://218.2.231.246/server/services/0163f7a9ba390e35d2e463f7a9b90005/arcgis/rest/tile/{z}/{y}/{x}?devAPiKey=016415ae11ff0e35e9c764158c44001b`,
+    options
+  );
+
+L.tileLayer.tdtwx_veca = options =>
+  L.tileLayer(
+    `http://218.2.231.246/server/services/0163f7aaf3370e35d2e463f7a9b9000f/arcgis/rest/tile/{z}/{y}/{x}?devAPiKey=016415ae11ff0e35e9c764158c44001b`,
+    options
+  );
+
+L.tileLayer.tdtwx_img = options =>
+  L.layerGroup([L.tileLayer.tdtwx_imgo(options), L.tileLayer.tdtwx_imga(options)]);
+L.tileLayer.tdtwx_vec = options =>
+  L.layerGroup([L.tileLayer.tdtwx_veco(options), L.tileLayer.tdtwx_veca(options)]);
+
 // 天地图·江苏
 L.tileLayer.tdtjs_imgo = options =>
   L.tileLayer(
